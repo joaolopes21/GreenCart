@@ -1,4 +1,6 @@
 <?php
+/*
+    testando se o commit esta funcionando */
 ?>
 <html>
 <head>
