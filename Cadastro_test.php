@@ -103,8 +103,9 @@ if(isset($_SESSION['duplicate'])){
     </div>
 </div>
 <script>
+    // jimmy butler bt
     function isEmail(text) {
-        const regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regex =/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
         if(regex.test(text)){
             return true;
         }
