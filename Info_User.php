@@ -90,7 +90,7 @@ $phone =  isset($_SESSION['infos_pessoa']['phone']) ? $_SESSION['infos_pessoa'][
         if(confirm('Are you sure you want to delete this account?')){
         window.location.href='Delete_account.php';
     }
-    
+    // hello
     }
 </script>
 </html>
