@@ -4,6 +4,7 @@ if(isset($_SESSION['name']) && isset($_SESSION['lastname'])){
 $_SESSION['firstname']=$_SESSION['name'];
 $_SESSION['lastname1']=$_SESSION['lastname'];
 }
+
 $_SESSION['infos']= $_SESSION['infos_pessoa']; 
 ?>
 <!DOCTYPE html>

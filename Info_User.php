@@ -1,10 +1,16 @@
 <?php
 session_start();
 
+if($_SESSION['is_produtor']){
+    $nome_empresa=isset($_SESSION['infos_pessoa_prod']['nome_empresa']) ? $_SESSION['infos_pessoa_prod']['nome_empresa'] : "N/A" ;
+    $email_prod = isset($_SESSION['infos_pessoa_prod']['email_prod']) ? $_SESSION['infos_pessoa_prod']['email_prod'] : "N/A" ;
+   $fone_prod= isset($_SESSION['infos_pessoa_prod']['fone_prod']) ? $_SESSION['infos_pessoa_prod']['fone_prod'] : "N/A" ;
+}
+else{
 $first_name =  isset($_SESSION['infos_pessoa']['first_name']) ? $_SESSION['infos_pessoa']['first_name'] : "N/A" ;
 $last_name =  isset($_SESSION['infos_pessoa']['last_name']) ? $_SESSION['infos_pessoa']['last_name'] : "N/A" ;
 $email =  isset($_SESSION['infos_pessoa']['email']) ? $_SESSION['infos_pessoa']['email'] : "N/A" ;
-$phone =  isset($_SESSION['infos_pessoa']['phone']) ? $_SESSION['infos_pessoa']['phone'] : "N/A" ;
+$phone =  isset($_SESSION['infos_pessoa']['phone']) ? $_SESSION['infos_pessoa']['phone'] : "N/A" ;}
 ?>
 
 
@@ -61,7 +67,33 @@ $phone =  isset($_SESSION['infos_pessoa']['phone']) ? $_SESSION['infos_pessoa'][
   
             </header>
             <section class="home" id="home">
+<?php if($_SESSION['is_produtor']){ ?>
+    <div style="display:block;">
+<div style="display: flex;">
+<div style="background-color: green;font-size: 20px;font-family:Verdana, Geneva, Tahoma, sans-serif; border-radius: 2px;align-items:center;color:white;">Nome Empresa : <?php echo $nome_empresa ?></div> <button style="margin-left : 30px;font-size:15px; font-family:Verdana, Geneva, Tahoma, sans-serif;">Edit Nome Empresa</button>
 
+</div> <br>
+
+
+
+
+<div style="display: flex;">
+<div style="background-color: green;font-size: 20px;font-family:Verdana, Geneva, Tahoma, sans-serif; border-radius: 2px;align-items:center;color:white;">email : <?php echo $email_prod; ?></div> <button style="margin-left : 30px;font-size:15px;font-family:Verdana, Geneva, Tahoma, sans-serif;">Edit Email</button>
+
+</div> <br>
+
+<div style="display: flex;">
+<div style="background-color: green;font-size: 20px;font-family:Verdana, Geneva, Tahoma, sans-serif; border-radius: 2px;align-items:center;color:white;">Phone : <?php echo $fone_prod; ?></div> <button style="margin-left : 30px;font-size:15px;font-family:Verdana, Geneva, Tahoma, sans-serif;">Edit Phone</button>
+
+</div> <br>
+
+<button style="margin : 30px;font-size:15px;font-family:Verdana, Geneva, Tahoma, sans-serif; background-color: red;border-radius: 3px;" onclick="delete_acc();">Delete Account</button>
+</div>
+
+
+
+
+    <?php } else{ ?>
 <div style="display:block;">
 <div style="display: flex;">
 <div style="background-color: green;font-size: 20px;font-family:Verdana, Geneva, Tahoma, sans-serif; border-radius: 2px;align-items:center;color:white;">First Name : <?php echo $first_name ?></div> <button style="margin-left : 30px;font-size:15px; font-family:Verdana, Geneva, Tahoma, sans-serif;">Edit First Name</button>
@@ -85,6 +117,7 @@ $phone =  isset($_SESSION['infos_pessoa']['phone']) ? $_SESSION['infos_pessoa'][
 <button style="margin : 30px;font-size:15px;font-family:Verdana, Geneva, Tahoma, sans-serif; background-color: red;border-radius: 3px;" onclick="delete_acc();">Delete Account</button>
 </div>
 </body>
+<?php } ?>
 <script>
     function delete_acc(){
         if(confirm('Are you sure you want to delete this account?')){

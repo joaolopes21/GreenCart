@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="CSS/style.css">
     <title>Formulário</title>
 </head>
@@ -27,7 +28,7 @@ if(isset($_SESSION['duplicate'])){
         <img src="images\greencart_carrinho-removebg-preview.png" alt="GreenCart">
     </div>
     <div class="form">
-        <form action="Insert_info.php" method="post" onsubmit="return validate();">
+        <form action="Insert_info_produtor.php" method="post" onsubmit="return validate();">
             <div class="form-header">
                 <div class="title">
                     <h1>Cadastre-se</h1>
@@ -39,14 +40,11 @@ if(isset($_SESSION['duplicate'])){
 
             <div class="input-group">
                 <div class="input-box">
-                    <label for="firstname">Primeiro Nome</label>
-                    <input id="firstname" type="text" name="first_name" placeholder="Digite seu primeiro nome" required>
+                    <label for="nome_empresa">Nome Empresa</label>
+                    <input id="nome_empresa" type="text" name="nome_empresa" placeholder="Digite o nome da empresa" required>
                 </div>
 
-                <div class="input-box">
-                    <label for="lastname">Sobrenome</label>
-                    <input id="lastname" type="text" name="last_name" placeholder="Digite seu sobrenome" required>
-                </div>
+            
                 <div class="input-box">
                     <label for="email">E-mail</label>
                     <input id="email" type="email" name="email" placeholder="Digite seu e-mail" required>
@@ -58,8 +56,8 @@ if(isset($_SESSION['duplicate'])){
                 </div>
 
                 <div class="input-box">
-                    <label for="CPF">CPF</label>
-                    <input id="CPF" type="CPF" name="cpf" placeholder="000.000.000-00" required>
+                    <label for="CNPJ">CNPJ</label>
+                    <input id="CNPJ" type="CNPJ" name="cnpj" placeholder="00.000.000/0000-00" required>
                 </div>
 
                 <div class="input-box">
@@ -75,31 +73,7 @@ if(isset($_SESSION['duplicate'])){
 
             </div>
 
-            <div class="gender-inputs">
-                <div class="gender-title">
-                    <h6>Gênero</h6>
-                </div>
-
-                <div class="gender-group">
-                    <div class="gender-input">
-                        <input id="female" type="radio" name="gender" value="Feminino">
-                        <label for="female">Feminino</label>
-                    </div>
-
-                    <div class="gender-input">
-                        <input id="male" type="radio" name="gender" value="Masculino">
-                        <label for="male">Masculino</label>
-                    </div>
-
-                    <div class="gender-input">
-                        <input id="others" type="radio" name="gender" value="Outros">
-                        <label for="others">Outros</label>
-                    </div>
-
-
-                </div>
-            </div>
-
+            
             <div class="continue-button">
                 <input type="submit" value="Continuar">
             </div>
@@ -108,7 +82,7 @@ if(isset($_SESSION['duplicate'])){
 </div>
 <script>
     function isEmail(text) {
-        const regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+        const regex =/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
         if(regex.test(text)){
             return true;
         }
@@ -118,7 +92,7 @@ if(isset($_SESSION['duplicate'])){
 
     function allLetter(inputtxt)
     {
-        var letters = /^[A-Za-z,\s]+$/;
+        var letters = /^[A-Za-z,\s,\.,\-]+$/;
         if(inputtxt.value.match(letters))
         {
             return true;
@@ -141,29 +115,80 @@ if(isset($_SESSION['duplicate'])){
         }
         return false;
     }
+    function validarCNPJ(cnpj) {
+ 
+ cnpj = cnpj.replace(/[^\d]+/g,'');
+
+ if(cnpj == '') return false;
+  
+ if (cnpj.length != 14)
+     return false;
+
+ 
+ if (cnpj == "00000000000000" || 
+     cnpj == "11111111111111" || 
+     cnpj == "22222222222222" || 
+     cnpj == "33333333333333" || 
+     cnpj == "44444444444444" || 
+     cnpj == "55555555555555" || 
+     cnpj == "66666666666666" || 
+     cnpj == "77777777777777" || 
+     cnpj == "88888888888888" || 
+     cnpj == "99999999999999")
+     return false;
+      
+ // Valida DVs
+ tamanho = cnpj.length - 2
+ numeros = cnpj.substring(0,tamanho);
+ digitos = cnpj.substring(tamanho);
+ soma = 0;
+ pos = tamanho - 7;
+ for (i = tamanho; i >= 1; i--) {
+   soma += numeros.charAt(tamanho - i) * pos--;
+   if (pos < 2)
+         pos = 9;
+ }
+ resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+ if (resultado != digitos.charAt(0))
+     return false;
+      
+ tamanho = tamanho + 1;
+ numeros = cnpj.substring(0,tamanho);
+ soma = 0;
+ pos = tamanho - 7;
+ for (i = tamanho; i >= 1; i--) {
+   soma += numeros.charAt(tamanho - i) * pos--;
+   if (pos < 2)
+         pos = 9;
+ }
+ resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+ if (resultado != digitos.charAt(1))
+       return false;
+        
+ return true;
+ 
+}
 
     function validate(){
 
-        let first=document.getElementById('firstname');
-        let last=document.getElementById('lastname');
+        let first=document.getElementById('nome_empresa');
         let email=document.getElementById('email');
         let phone=document.getElementById('number');
         let password=document.getElementById('password');
-        let masculino = document.getElementById('male');
-        let feminino = document.getElementById('female');
-        let outros = document.getElementById('others');
-        let confirm_pass = document.getElementById('confirmPassword');
+        let cnpj = document.getElementById('CNPJ');
+       let confirm_pass = document.getElementById('confirmPassword');
+      
 
         if (first.value.length<3 || !allLetter(first)){
             alert('First name is incorrect.');
             first.focus();
             return false;
         }
-        if (last.value.length<3 || !allLetter(first)){
-            alert('Last name is incorrect.')
-            last.focus();
+        if (!validarCNPJ(cnpj.value)){
+            alert('CNPJ is wrong.')
+            CNPJ.focus();
             return false;
-        }
+        } 
         if(!isEmail(email.value)){
             alert('Please input a valid email.');
             email.focus();
@@ -181,10 +206,7 @@ if(isset($_SESSION['duplicate'])){
             password.style.backgroundColor='red';
             return false;
         }
-        if(!(masculino.checked || feminino.checked || outros.checked)){
-            alert('Por favor , informar genero.');
-            return false;
-        }
+        
         if(password.value != confirm_pass.value){
             alert('Passwords don\'t match');
             return false
