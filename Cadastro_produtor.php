@@ -38,6 +38,8 @@ if(isset($_SESSION['duplicate'])){
                 </div>
             </div>
 
+            
+
             <div class="input-group">
                 <div class="input-box">
                     <label for="nome_empresa">Nome Empresa</label>
